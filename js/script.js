@@ -1,26 +1,19 @@
 
-$('#btnLogout').click(function(event) {
-  var args = { 
-    request: 'logout', 
-    arg: 'sin accion'
-  };
-  sendData(args);  
-});
-
-function sendData(args){
-    var form = $('<form></form>');
-    form.attr("method", "post");
-    form.attr("action", 'localhosrt/catalogo/controller/controller.php');
-    form.attr("target", '_self');
-    $.each( args, function( key, value ) {
-        var field = $('<input></input>');
-       field.attr("type", "hidden");
-        field.attr("name", key);
-        field.attr("value", value);
-       form.append(field);
+// Logout helper — uses fetch instead of building a form in memory
+function sendData(args) {
+    $.ajax({
+        url: 'controller/router.php',
+        type: 'POST',
+        data: args,
+        success: function() {
+            window.location.href = 'login.php';
+        }
     });
-    $(form).appendTo('body').submit();
 }
+
+// NOTE: #btnLogout doesn't exist in the current UI.
+// This handler is kept for future use if a logout button is added.
+// The actual logout is handled by logout.php (direct link).
 
 (function($) {
   "use strict"; 
