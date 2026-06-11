@@ -24,9 +24,13 @@ function sendData(args){
 
 (function($) {
   "use strict"; 
-  $('.navbar-sidenav [data-toggle="tooltip"]').tooltip({
-    template: '<div class="tooltip navbar-sidenav-tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
-  })
+  // Bootstrap 5 tooltips — initialize with JS API instead of data attributes
+  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+  tooltipTriggerList.map(function (el) {
+    return new bootstrap.Tooltip(el, {
+      template: '<div class="tooltip navbar-sidenav-tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
+    });
+  });
   $("#sidenavToggler").click(function(e) {
     e.preventDefault();
     $("body").toggleClass("sidenav-toggled");
@@ -51,7 +55,11 @@ function sendData(args){
       $('.scroll-to-top').fadeOut();
     }
   });
-  $('[data-toggle="tooltip"]').tooltip()
+  // Initialize all tooltips on the page
+  var allTooltipTriggers = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+  allTooltipTriggers.map(function (el) {
+    return new bootstrap.Tooltip(el);
+  });
   $(document).on('click', 'a.scroll-to-top', function(event) {
     var $anchor = $(this);
     $('html, body').stop().animate({
@@ -60,4 +68,3 @@ function sendData(args){
     event.preventDefault();
   });
 })(jQuery);
-

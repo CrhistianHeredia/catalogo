@@ -19,10 +19,10 @@ Script de validacion de Session de la aplicacion y redireccionamiento en caso de
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Usuarios</title>
-  <link href="lib/bootstrap/css/bootstrap.css?v=1.1.1.1" rel="stylesheet">
-  <link href="lib/font-awesome/css/font-awesome.css?v=1.1.1.1" rel="stylesheet" type="text/css">
-  <link href="css/style.css?v=1.1.1.1" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
+  <link href="lib/bootstrap/css/bootstrap.css?v=2.1.1.1" rel="stylesheet">
+  <link href="lib/font-awesome/css/all.css?v=2.1.1.1" rel="stylesheet" type="text/css">
+  <link href="css/style.css?v=2.1.1.1" rel="stylesheet">
+  <link href="lib/jquery-confirm/jquery-confirm.min.css" rel="stylesheet">
 </head>
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <?php include("layout/header.php");?>
@@ -43,7 +43,7 @@ Script de validacion de Session de la aplicacion y redireccionamiento en caso de
         </div>
         <div class="col-12">
             <table class="table">
-              <thead class="thead-dark">
+              <thead class="table-dark">
                   <tr>
                     <th>Nombre</th>
                     <th>Email</th>
@@ -59,8 +59,9 @@ Script de validacion de Session de la aplicacion y redireccionamiento en caso de
     </div>
    <?php include("layout/footer.php");?>
   </div>
-  <script  src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+  <script src="lib/jquery/jquery.min.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="lib/jquery-confirm/jquery-confirm.min.js"></script>
   <script type="text/javascript">var allUsuarios = <?php echo json_encode($usuariosAll)?>;</script>
   <script src="js/usuario.js"></script>
 </body>

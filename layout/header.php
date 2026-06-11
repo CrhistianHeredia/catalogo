@@ -1,13 +1,13 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav" style="background: #227bd4!important;">
     <a class="navbar-brand" href="index.php">Admin usuarios</a>
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <!-- <span class="navbar-toggler-icon"></span> -->
       <i class="fa fa-bars" aria-hidden="true"></i>
 
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion" style="background:#0c2029 !important;">
-        <li class="nav-item" data-placement="right">
+        <li class="nav-item" data-bs-placement="right">
           <a class="nav-link" href="usuarios.php">
              <i class="fa fa-user-circle" aria-hidden="true"></i>
             <span class="nav-link-text">Usuario</span>

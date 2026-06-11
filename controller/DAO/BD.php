@@ -17,7 +17,7 @@ Class DB {
 
 	public function openDB(){
         try{
-            $conexion = new pdo('mysql:host='.$this->host.';dbname='.$this->database, $this->user, $this->password,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+            $conexion = new pdo('mysql:host='.$this->host.';dbname='.$this->database, $this->user, $this->password,array(Pdo\Mysql::ATTR_INIT_COMMAND => "SET NAMES utf8"));
             $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             return $conexion;
         }catch(PDOException $e){
