@@ -2,6 +2,13 @@
 
 Fecha: 2026-06-11 | Archivos revisados: 12 (index.php, header.php, footer.php, controller.php, BD.php, campo.php, usuario.php, usuario.js, script.js, style.css, bdprueba.sql, phpunit.xml)
 
+## Estado de remediación (2026-06-11)
+
+- **P1 Seguridad** — ✅ aplicado: 1.1 XSS (`escapeHtml`), 1.2 autenticación (login + sesiones + bcrypt + logout). 1.3 SQLi ya estaba mitigada (prepared statements).
+- **P2 Arquitectura** — ✅ aplicado: 2.1 DI en DAOs, 2.2 routing con whitelist + auth, 2.3 credenciales externas (`config.local.php`).
+- **P3 Calidad** — ✅ aplicado: 3.1 propiedad dinámica, 3.2 `strict_types` + type hints, 3.3 `sendData()` → `$.ajax`, 3.5 código muerto. ⏳ **PENDIENTE: 3.4 namespaces PSR-4** — omitido deliberadamente para no romper el autoload y los 20 tests; requiere reestructura a `src/` con actualización de todos los require/include y el bootstrap de tests. Retomar en sesión dedicada.
+- Tests: 20 PHPUnit (57 assertions) + JS, todos verdes tras la remediación.
+
 ---
 
 ## 🔴 Prioridad 1 — Seguridad
