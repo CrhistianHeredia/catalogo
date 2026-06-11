@@ -1,3 +1,20 @@
+/**
+ * Escape HTML special chars to prevent XSS when interpolating user data
+ * into HTML strings.
+ * @param {string} unsafe - raw string that may contain <>"'&
+ * @returns {string} safely escaped string
+ */
+function escapeHtml(unsafe) {
+  if (unsafe == null) return '';
+  if (typeof unsafe !== 'string') return String(unsafe);
+  return unsafe
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 var add = document.querySelector('#nuevoUsuario')
 if (add != null) {
 
@@ -42,7 +59,7 @@ if (add != null) {
                 if(errors.length > 0){
                     $.alert({
                       title: '<i class="fa fa-exclamation-triangle text-warning me-2"></i>Campos requeridos',
-                      content: 'Complete: <strong>'+errors.join(', ')+'</strong>',
+                      content: 'Complete: <strong>'+escapeHtml(errors.join(', '))+'</strong>',
                       type: 'orange',
                       theme: 'material',
                       buttons: { ok: 'Entendido' }
@@ -92,21 +109,24 @@ if (add != null) {
 }
 
 function editarUsu(idx) {
+  var safeName = escapeHtml(allUsuarios[idx]['user_name']);
+  var safeEmail = escapeHtml(allUsuarios[idx]['email']);
+  var safePhone = escapeHtml(allUsuarios[idx]['phone']);
   $.confirm({
     title: '<i class="fa fa-pencil-square-o text-primary me-2"></i>Editar Datos de Usuario',
     content: '<form>'
     +'<div class="row g-3">'
           +'<div class="col-12">'
             +'<label class="form-label small fw-semibold text-muted" for="itemNombre">Nombre</label>'
-            +'<input value="'+allUsuarios[idx]['user_name']+'" type="text" class="form-control" id="itemNombre" placeholder="Nombre completo">'
+            +'<input value="'+safeName+'" type="text" class="form-control" id="itemNombre" placeholder="Nombre completo">'
           +'</div>'
           +'<div class="col-md-6">'
           +'<label class="form-label small fw-semibold text-muted" for="itemEmail">Email</label>'
-          +'<input value="'+ allUsuarios[idx]['email']+'" type="email" class="form-control" id="itemEmail" placeholder="correo@ejemplo.com">'
+          +'<input value="'+safeEmail+'" type="email" class="form-control" id="itemEmail" placeholder="correo@ejemplo.com">'
         +'</div>'
           +'<div class="col-md-6">'
             +'<label class="form-label small fw-semibold text-muted" for="itemPhone">Teléfono</label>'
-            +'<input value="'+ allUsuarios[idx]['phone']+'" type="text" class="form-control" id="itemPhone" placeholder="Teléfono">'
+            +'<input value="'+safePhone+'" type="text" class="form-control" id="itemPhone" placeholder="Teléfono">'
           +'</div>'
         +'</div>'
       +'</form>',
@@ -130,7 +150,7 @@ function editarUsu(idx) {
             if(errors.length > 0){
                 $.alert({
                   title: '<i class="fa fa-exclamation-triangle text-warning me-2"></i>Campos requeridos',
-                  content: 'Complete: <strong>'+errors.join(', ')+'</strong>',
+                  content: 'Complete: <strong>'+escapeHtml(errors.join(', '))+'</strong>',
                   type: 'orange',
                   theme: 'material',
                   buttons: { ok: 'Entendido' }
@@ -180,12 +200,16 @@ function editarUsu(idx) {
  function printTable(){
     var tr = "";
     for (var i = 0; i < allUsuarios.length; i++) {
+       var safeName = escapeHtml(allUsuarios[i]['user_name']);
+       var safeEmail = escapeHtml(allUsuarios[i]['email']);
+       var safePhone = escapeHtml(allUsuarios[i]['phone']);
+       var safeEmailHref = escapeHtml(allUsuarios[i]['email']);
        var btn = '<button type="button" class="btn-action btn-action-edit" onclick="editarUsu('+i+')" title="Editar"><i class="fa fa-pencil" aria-hidden="true"></i></button>'
               +'<button type="button" class="btn-action btn-action-delete ms-1" onclick="eliminaUsu('+i+')" title="Eliminar"><i class="fa fa-trash" aria-hidden="true"></i></button>';
         tr += '<tr>'
-          +'<td class="ps-4 fw-semibold">'+allUsuarios[i]['user_name']+'</td>'
-          +'<td><a href="mailto:'+allUsuarios[i]['email']+'" class="text-decoration-none">'+allUsuarios[i]['email']+'</a></td>'
-          +'<td>'+allUsuarios[i]['phone']+'</td>'
+          +'<td class="ps-4 fw-semibold">'+safeName+'</td>'
+          +'<td><a href="mailto:'+safeEmailHref+'" class="text-decoration-none">'+safeEmail+'</a></td>'
+          +'<td>'+safePhone+'</td>'
           +'<td class="text-center">'
             +'<div class="d-flex justify-content-center gap-1">'
              + btn
@@ -197,9 +221,10 @@ function editarUsu(idx) {
   }
 
 function eliminaUsu(inx){
+   var safeName = escapeHtml(allUsuarios[inx]['user_name']);
    $.confirm({
     title: '<i class="fa fa-trash text-danger me-2"></i>Eliminar Usuario',
-    content: '¿Está seguro de eliminar a <strong>'+allUsuarios[inx]['user_name']+'</strong>?',
+    content: '¿Está seguro de eliminar a <strong>'+safeName+'</strong>?',
     theme: 'material',
     type: 'red',
     buttons: {

@@ -1,44 +1,52 @@
 /**
- * Unit tests for the printTable function in js/usuario.js
+ * Unit tests for printTable + escapeHtml in js/usuario.js
  *
- * Run with: node --experimental-vm-modules tests/printTable.test.js
- * Or: npx jest (if jest is available)
+ * Run with: node tests/printTable.test.js
  */
-
-// Simulate the printTable + helper functions exactly as they appear in usuario.js
-// We extract just the logic, isolating it from DOM/jQuery dependencies
 
 global.allUsuarios = [];
 
 /**
- * Generates HTML row string from allUsuarios array (same logic as usuario.js)
- * @param {number} i - index
- * @returns {string} HTML string of a single table row
+ * Escape HTML special chars (mirrors the function in usuario.js)
  */
-function buildRow(i) {
-  var btn = '<button type="button" class="btn-action btn-action-edit" onclick="editarUsu(' + i + ')" title="Editar"><i class="fa fa-pencil" aria-hidden="true"></i></button>'
-    + '<button type="button" class="btn-action btn-action-delete ms-1" onclick="eliminaUsu(' + i + ')" title="Eliminar"><i class="fa fa-trash" aria-hidden="true"></i></button>';
-  return '<tr>'
-    + '<td class="ps-4 fw-semibold">' + allUsuarios[i]['user_name'] + '</td>'
-    + '<td><a href="mailto:' + allUsuarios[i]['email'] + '" class="text-decoration-none">' + allUsuarios[i]['email'] + '</a></td>'
-    + '<td>' + allUsuarios[i]['phone'] + '</td>'
-    + '<td class="text-center"><div class="d-flex justify-content-center gap-1">' + btn + '</div></td>'
-  + '</tr>';
+function escapeHtml(unsafe) {
+  if (unsafe == null) return '';
+  if (typeof unsafe !== 'string') return String(unsafe);
+  return unsafe
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
 }
 
 /**
- * Generates full table body HTML from global allUsuarios (same logic as printTable)
- * @returns {string}
+ * Generates full table body HTML (mirrors printTable in usuario.js)
  */
 function printTableHTML() {
   var tr = "";
   for (var i = 0; i < allUsuarios.length; i++) {
-    tr += buildRow(i);
+     var safeName = escapeHtml(allUsuarios[i]['user_name']);
+     var safeEmail = escapeHtml(allUsuarios[i]['email']);
+     var safePhone = escapeHtml(allUsuarios[i]['phone']);
+     var safeEmailHref = escapeHtml(allUsuarios[i]['email']);
+     var btn = '<button type="button" class="btn-action btn-action-edit" onclick="editarUsu('+i+')" title="Editar"><i class="fa fa-pencil" aria-hidden="true"></i></button>'
+            +'<button type="button" class="btn-action btn-action-delete ms-1" onclick="eliminaUsu('+i+')" title="Eliminar"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+      tr += '<tr>'
+        +'<td class="ps-4 fw-semibold">'+safeName+'</td>'
+        +'<td><a href="mailto:'+safeEmailHref+'" class="text-decoration-none">'+safeEmail+'</a></td>'
+        +'<td>'+safePhone+'</td>'
+        +'<td class="text-center">'
+          +'<div class="d-flex justify-content-center gap-1">'
+           + btn
+          +'</div>'
+        +'</td>'
+      +'</tr>';
   }
   return tr;
 }
 
-// ─── Tests ────────────────────────────────────────────────
+// ─── Helpers ──────────────────────────────────────────────
 
 function assert(condition, msg) {
   if (!condition) {
@@ -48,6 +56,40 @@ function assert(condition, msg) {
     console.log('PASS: ' + msg);
   }
 }
+
+function assertIncludes(haystack, needle, msg) {
+  var ok = haystack.indexOf(needle) !== -1;
+  assert(ok, msg || ('Expected "' + needle + '" to appear'));
+}
+
+function assertNotIncludes(haystack, needle, msg) {
+  var ok = haystack.indexOf(needle) === -1;
+  assert(ok, msg || ('Expected "' + needle + '" to NOT appear'));
+}
+
+// ─── escapeHtml tests ─────────────────────────────────────
+
+var escResult = escapeHtml('<script>alert("xss")</script>');
+assert(escResult === '&lt;script&gt;alert(&quot;xss&quot;)&lt;/script&gt;',
+  'escapeHtml escapes < > "');
+
+escResult = escapeHtml("it's & stuff");
+assert(escResult === 'it&#039;s &amp; stuff',
+  'escapeHtml escapes & and single quote');
+
+escResult = escapeHtml('plain text');
+assert(escResult === 'plain text', 'escapeHtml passes plain text unchanged');
+
+escResult = escapeHtml('');
+assert(escResult === '', 'escapeHtml handles empty string');
+
+escResult = escapeHtml(null);
+assert(escResult === '', 'escapeHtml handles null');
+
+escResult = escapeHtml(undefined);
+assert(escResult === '', 'escapeHtml handles undefined');
+
+// ─── printTable tests ─────────────────────────────────────
 
 // Test 1: empty users
 allUsuarios = [];
@@ -59,16 +101,16 @@ allUsuarios = [
   { user_name: 'Alice', email: 'alice@test.com', phone: '555-0100', id_user: 1 }
 ];
 html = printTableHTML();
-assert(html.includes('Alice'), 'Single user: name appears');
-assert(html.includes('alice@test.com'), 'Single user: email appears');
-assert(html.includes('555-0100'), 'Single user: phone appears');
-assert(html.includes('btn-action-edit'), 'Single user: edit button present');
-assert(html.includes('btn-action-delete'), 'Single user: delete button present');
-assert(html.includes('fa-pencil'), 'Single user: pencil icon');
-assert(html.includes('fa-trash'), 'Single user: trash icon');
-assert(html.includes('mailto:alice@test.com'), 'Single user: mailto link');
-assert(html.includes('<tr>'), 'Single user: table row open');
-assert(html.includes('</tr>'), 'Single user: table row close');
+assertIncludes(html, 'Alice', 'Single user: name appears');
+assertIncludes(html, 'alice@test.com', 'Single user: email appears');
+assertIncludes(html, '555-0100', 'Single user: phone appears');
+assertIncludes(html, 'btn-action-edit', 'Single user: edit button present');
+assertIncludes(html, 'btn-action-delete', 'Single user: delete button present');
+assertIncludes(html, 'fa-pencil', 'Single user: pencil icon');
+assertIncludes(html, 'fa-trash', 'Single user: trash icon');
+assertIncludes(html, 'mailto:alice@test.com', 'Single user: mailto link');
+assertIncludes(html, '<tr>', 'Single user: table row open');
+assertIncludes(html, '</tr>', 'Single user: table row close');
 
 // Test 3: multiple users
 allUsuarios = [
@@ -77,9 +119,9 @@ allUsuarios = [
   { user_name: 'Carol', email: 'carol@test.com', phone: '555-0300', id_user: 3 }
 ];
 html = printTableHTML();
-assert(html.includes('Alice'), 'Multiple: Alice present');
-assert(html.includes('Bob'), 'Multiple: Bob present');
-assert(html.includes('Carol'), 'Multiple: Carol present');
+assertIncludes(html, 'Alice', 'Multiple: Alice present');
+assertIncludes(html, 'Bob', 'Multiple: Bob present');
+assertIncludes(html, 'Carol', 'Multiple: Carol present');
 assert((html.match(/<tr>/g) || []).length === 3, 'Multiple: 3 rows');
 assert((html.match(/btn-action-edit/g) || []).length === 3, 'Multiple: 3 edit buttons');
 assert((html.match(/btn-action-delete/g) || []).length === 3, 'Multiple: 3 delete buttons');
@@ -90,16 +132,41 @@ allUsuarios = [
   { user_name: 'One', email: 'o@t.com', phone: '111', id_user: 1 }
 ];
 html = printTableHTML();
-assert(html.includes("editarUsu(0)"), 'Index 0 onclick editar');
-assert(html.includes("eliminaUsu(1)"), 'Index 1 onclick elimina');
-assert(!html.includes("editarUsu(2)"), 'No out-of-bounds index');
+assertIncludes(html, "editarUsu(0)", 'Index 0 onclick editar');
+assertIncludes(html, "eliminaUsu(1)", 'Index 1 onclick elimina');
+assertNotIncludes(html, "editarUsu(2)", 'No out-of-bounds index');
 
-// Test 5: ps-4 class on first cell
-allUsuarios = [{ user_name: 'X', email: 'x@t.com', phone: '000', id_user: 1 }];
+// Test 5: XSS prevention — <script> in name gets escaped
+allUsuarios = [
+  { user_name: '<script>alert("xss")</script>', email: 'x@t.com', phone: '000', id_user: 1 }
+];
 html = printTableHTML();
-assert(html.includes('ps-4'), 'First td has ps-4 class');
+assertNotIncludes(html, '<script>', 'XSS: raw <script> is NOT in output');
+assertIncludes(html, '&lt;script&gt;', 'XSS: <script> is HTML-escaped');
+assertIncludes(html, '&quot;', 'XSS: double quotes are escaped');
 
-// Test 6: email as mailto link
-assert(html.includes('href="mailto:x@t.com"'), 'Email rendered as mailto link');
+// Test 6: XSS prevention — email with injection
+allUsuarios = [
+  { user_name: 'Hacker', email: '"><script>evil()</script>', phone: '000', id_user: 1 }
+];
+html = printTableHTML();
+assertIncludes(html, '&quot;&gt;&lt;script&gt;evil()&lt;/script&gt;',
+  'XSS: email with quote+script is escaped');
+// The escaped string still contains "evil()" text inside the safe encoding
+// The important thing is that raw <script> tags are gone
+assertNotIncludes(html, '<script>evil()</script>',
+  'XSS: raw unescaped <script> tag is NOT in output');
+assertNotIncludes(html, '"><script>',
+  'XSS: raw quote+tag combo NOT in output');
+
+// Test 7: XSS in phone field
+allUsuarios = [
+  { user_name: 'X', email: 'x@t.com', phone: '<img src=x onerror=alert(1)>', id_user: 1 }
+];
+html = printTableHTML();
+assertIncludes(html, '&lt;img src=x onerror=alert(1)&gt;',
+  'XSS: phone with img onerror is escaped');
+assertNotIncludes(html, '<img src=x onerror=alert(1)>',
+  'XSS: raw unescaped img tag NOT in output');
 
 console.log('\nAll tests completed.');
