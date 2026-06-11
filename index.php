@@ -48,7 +48,7 @@
       <!-- Toolbar: title + add button -->
       <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="h3 fw-bold text-dark mb-0">
-          <i class="fa-solid fa-address-book text-primary me-2"></i>Usuarios
+          <i class="fa-solid fa-users text-primary me-2"></i>Usuarios
         </h1>
         <a id="nuevoUsuario" class="btn btn-primary rounded-pill shadow-sm px-4" role="button">
           <i class="fa-solid fa-plus me-1"></i>Nuevo

@@ -30,8 +30,8 @@ function printTableHTML() {
      var safeEmail = escapeHtml(allUsuarios[i]['email']);
      var safePhone = escapeHtml(allUsuarios[i]['phone']);
      var safeEmailHref = escapeHtml(allUsuarios[i]['email']);
-     var btn = '<button type="button" class="btn-action btn-action-edit" onclick="editarUsu('+i+')" title="Editar"><i class="fa fa-pencil" aria-hidden="true"></i></button>'
-            +'<button type="button" class="btn-action btn-action-delete ms-1" onclick="eliminaUsu('+i+')" title="Eliminar"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+     var btn = '<button type="button" class="btn-action btn-action-edit" onclick="editarUsu('+i+')" title="Editar"><i class="fa-solid fa-pencil" aria-hidden="true"></i></button>'
+            +'<button type="button" class="btn-action btn-action-delete ms-1" onclick="eliminaUsu('+i+')" title="Eliminar"><i class="fa-solid fa-trash-can" aria-hidden="true"></i></button>';
       tr += '<tr>'
         +'<td class="ps-4 fw-semibold">'+safeName+'</td>'
         +'<td><a href="mailto:'+safeEmailHref+'" class="text-decoration-none">'+safeEmail+'</a></td>'
