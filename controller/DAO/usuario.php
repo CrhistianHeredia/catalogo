@@ -49,11 +49,11 @@ class Usuario {
     }
 
     public function getEmail() {
-        return parse_str($this->email);
+        return $this->email;
     }
         
     public function getName() {
-        return parse_str($this->nombre);
+        return $this->name;
     }
 
     public function getPhone() {
