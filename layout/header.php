@@ -1,25 +1,19 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav" style="background: #227bd4!important;">
-    <a class="navbar-brand" href="index.php">Admin usuarios</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-      <!-- <span class="navbar-toggler-icon"></span> -->
-      <i class="fa fa-bars" aria-hidden="true"></i>
-
-    </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav navbar-sidenav" id="exampleAccordion" style="background:#0c2029 !important;">
-        <li class="nav-item" data-bs-placement="right">
-          <a class="nav-link" href="usuarios.php">
-             <i class="fa fa-user-circle" aria-hidden="true"></i>
-            <span class="nav-link-text">Usuario</span>
-          </a>
-        </li>
-      </ul>
-      <ul class="navbar-nav sidenav-toggler" style="background: #227bd4!important;">
-        <li class="nav-item">
-          <a class="nav-link text-center" id="sidenavToggler">
-            <i class="fa fa-fw fa-angle-left"></i>
-          </a>
-        </li>
-      </ul>
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNav" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+    <div class="container-fluid px-4">
+      <a class="navbar-brand fw-bold" href="index.php">
+        <i class="fa fa-database me-2"></i>Admin usuarios
+      </a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fa fa-bars fa-lg" aria-hidden="true"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link px-3 active" href="usuarios.php">
+              <i class="fa fa-user-circle me-1" aria-hidden="true"></i>Usuario
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   </nav>

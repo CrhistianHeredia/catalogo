@@ -21,41 +21,59 @@ Script de validacion de Session de la aplicacion y redireccionamiento en caso de
   <title>Usuarios</title>
   <link href="lib/bootstrap/css/bootstrap.css?v=2.1.1.1" rel="stylesheet">
   <link href="lib/font-awesome/css/all.css?v=2.1.1.1" rel="stylesheet" type="text/css">
-  <link href="css/style.css?v=2.1.1.1" rel="stylesheet">
+  <link href="css/style.css?v=2.2.0" rel="stylesheet">
   <link href="lib/jquery-confirm/jquery-confirm.min.css" rel="stylesheet">
 </head>
-<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+<body class="fixed-nav sticky-footer bg-light" id="page-top">
   <?php include("layout/header.php");?>
   <div class="content-wrapper">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-12" style="background: #E91E63!important;padding: 5px 5px;color: aliceblue;margin-top: 3rem;margin-bottom: 1rem;">
-            <div class="" style="display: inline-block;vertical-align: middle;">
-                <h2 id="usuarioNombre" style=" margin-top: 0.5rem;margin-left: 80px;">
-                  <i class="fa fa-user-circle-o" aria-hidden="true" style="display: block; position: absolute; top: -40px; font-size: 3rem; padding: 10px 10px;  background: #03191d; border-radius: 6px; left: 10px;"></i>Registro de nuevos usuarios</h2>
+    <div class="container-fluid py-4">
+
+      <!-- Page header card -->
+      <div class="card border-0 shadow-sm rounded-3 mb-4" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+        <div class="card-body p-4 text-white">
+          <div class="d-flex align-items-center">
+            <div class="flex-shrink-0 me-3">
+              <i class="fa fa-user-circle-o fa-3x" aria-hidden="true" style="opacity: 0.85;"></i>
             </div>
+            <div class="flex-grow-1">
+              <h2 class="h4 mb-1 fw-bold" id="usuarioNombre">Registro de nuevos usuarios</h2>
+              <p class="mb-0 small opacity-75">Gestión del catálogo de usuarios del sistema</p>
+            </div>
+          </div>
         </div>
-        <div class="col-10">
-          <h1>Usuarios</h1>
-        </div>
-        <div class="col-2" style="text-align: end;vertical-align: middle;">
-          <a id="nuevoUsuario" style="display: inline-block; vertical-align: middle; font-size: 1.7rem; color: azure; background: #03A9F4; padding: 5px 7px; border-radius: 2px; cursor: pointer;"><i class="fa fa-plus-square" aria-hidden="true" style="display: block;vertical-align: middle;"></i></a>
-        </div>
-        <div class="col-12">
-            <table class="table">
+      </div>
+
+      <!-- Toolbar: title + add button -->
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="h3 fw-bold text-dark mb-0">
+          <i class="fa fa-users text-primary me-2"></i>Usuarios
+        </h1>
+        <a id="nuevoUsuario" class="btn btn-primary rounded-pill shadow-sm px-4" role="button">
+          <i class="fa fa-plus-circle me-1"></i>Nuevo
+        </a>
+      </div>
+
+      <!-- Users table -->
+      <div class="card border-0 shadow-sm rounded-3">
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover table-striped align-middle mb-0">
               <thead class="table-dark">
-                  <tr>
-                    <th>Nombre</th>
-                    <th>Email</th>
-                    <th>Telefono</th>
-                    <th>control</th>
+                <tr>
+                  <th class="ps-4">Nombre</th>
+                  <th>Email</th>
+                  <th>Teléfono</th>
+                  <th class="text-center" style="width: 140px;">Control</th>
                 </tr>
               </thead>
               <tbody id="tbodyAllUsuarios">
               </tbody>
             </table>
-        </div>                       
+          </div>
         </div>
+      </div>
+
     </div>
    <?php include("layout/footer.php");?>
   </div>
@@ -63,6 +81,6 @@ Script de validacion de Session de la aplicacion y redireccionamiento en caso de
   <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="lib/jquery-confirm/jquery-confirm.min.js"></script>
   <script type="text/javascript">var allUsuarios = <?php echo json_encode($usuariosAll)?>;</script>
-  <script src="js/usuario.js"></script>
+  <script src="js/usuario.js?v=2.2.0"></script>
 </body>
 </html>

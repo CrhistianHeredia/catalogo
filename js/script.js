@@ -24,7 +24,7 @@ function sendData(args){
 
 (function($) {
   "use strict"; 
-  // Bootstrap 5 tooltips — initialize with JS API instead of data attributes
+  // Initialize Bootstrap 5 tooltips
   var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
   tooltipTriggerList.map(function (el) {
     return new bootstrap.Tooltip(el, {
@@ -54,11 +54,6 @@ function sendData(args){
     } else {
       $('.scroll-to-top').fadeOut();
     }
-  });
-  // Initialize all tooltips on the page
-  var allTooltipTriggers = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-  allTooltipTriggers.map(function (el) {
-    return new bootstrap.Tooltip(el);
   });
   $(document).on('click', 'a.scroll-to-top', function(event) {
     var $anchor = $(this);
