@@ -1,15 +1,14 @@
 <?php 
 
   require_once("controller/controller.php");
+  require_once("controller/auth.php");
+
+  requireAuth();
+
+  $adminUser = $_SESSION['admin_user'];
   
-/*
-Script de validacion de Session de la aplicacion y redireccionamiento en caso de no existir sesion alguna
-*/
-    $controller = new Control();
-    $usuariosAll = $controller->allUsuarios();
-/*
-  Interfas de comunicacion para el modulo de usuarios altas
-*/
+  $controller = new Control();
+  $usuariosAll = $controller->allUsuarios();
 
 ?>
 <!DOCTYPE html>
