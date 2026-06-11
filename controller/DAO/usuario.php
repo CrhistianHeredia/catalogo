@@ -15,6 +15,7 @@ class Usuario extends DB{
 
 	private $id = null; 
 	private $nombre = null;
+	private $name = null;
 	private $email = null;
 	private $phone = null;
 
