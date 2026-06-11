@@ -18,9 +18,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Usuarios</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="lib/bootstrap/css/bootstrap.css?v=2.1.1.1" rel="stylesheet">
   <link href="lib/font-awesome/css/all.css?v=2.1.1.1" rel="stylesheet" type="text/css">
-  <link href="css/style.css?v=2.2.0" rel="stylesheet">
+  <link href="css/style.css?v=2.3.0" rel="stylesheet">
   <link href="lib/jquery-confirm/jquery-confirm.min.css" rel="stylesheet">
 </head>
 <body class="fixed-nav sticky-footer bg-light" id="page-top">
@@ -33,7 +35,7 @@
         <div class="card-body p-4 text-white">
           <div class="d-flex align-items-center">
             <div class="flex-shrink-0 me-3">
-              <i class="fa fa-user-circle-o fa-3x" aria-hidden="true" style="opacity: 0.85;"></i>
+              <i class="fa-solid fa-circle-user fa-3x" aria-hidden="true" style="opacity: 0.85;"></i>
             </div>
             <div class="flex-grow-1">
               <h2 class="h4 mb-1 fw-bold" id="usuarioNombre">Registro de nuevos usuarios</h2>
@@ -46,10 +48,10 @@
       <!-- Toolbar: title + add button -->
       <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="h3 fw-bold text-dark mb-0">
-          <i class="fa fa-users text-primary me-2"></i>Usuarios
+          <i class="fa-solid fa-address-book text-primary me-2"></i>Usuarios
         </h1>
         <a id="nuevoUsuario" class="btn btn-primary rounded-pill shadow-sm px-4" role="button">
-          <i class="fa fa-plus-circle me-1"></i>Nuevo
+          <i class="fa-solid fa-plus me-1"></i>Nuevo
         </a>
       </div>
 

@@ -21,7 +21,7 @@ if (add != null) {
   add.addEventListener('click', function(e){
     e.preventDefault()
     $.confirm({
-      title: '<i class="fa fa-user-plus text-primary me-2"></i>Nuevo usuario',
+      title: '<i class="fa-solid fa-user-plus text-primary me-2"></i>Nuevo usuario',
       content: '<form>'
       +'<div class="row g-3">'
             +'<div class="col-12">'
@@ -45,7 +45,7 @@ if (add != null) {
         theme: 'material',
         buttons: {
             confirm: {
-              text: '<i class="fa fa-check me-1"></i>Guardar',
+              text: '<i class="fa-solid fa-check me-1"></i>Guardar',
               btnClass: 'btn-primary',
               action: function () {
                 var name = this.$content.find('#itemNombre').val();
@@ -58,7 +58,7 @@ if (add != null) {
                 if(!email) errors.push('Email');
                 if(errors.length > 0){
                     $.alert({
-                      title: '<i class="fa fa-exclamation-triangle text-warning me-2"></i>Campos requeridos',
+                      title: '<i class="fa-solid fa-triangle-exclamation text-warning me-2"></i>Campos requeridos',
                       content: 'Complete: <strong>'+escapeHtml(errors.join(', '))+'</strong>',
                       type: 'orange',
                       theme: 'material',
@@ -68,7 +68,7 @@ if (add != null) {
                 }
                 if(!caract.test(email)){
                     $.alert({
-                      title: '<i class="fa fa-times-circle text-danger me-2"></i>Email inválido',
+                      title: '<i class="fa-solid fa-circle-xmark text-danger me-2"></i>Email inválido',
                       content: 'Formato de correo electrónico no válido',
                       type: 'red',
                       theme: 'material',
@@ -87,7 +87,7 @@ if (add != null) {
                 })
                 .always(function() {
                   $.alert({
-                    title: '<i class="fa fa-check-circle text-success me-2"></i>Completado',
+                    title: '<i class="fa-solid fa-circle-check text-success me-2"></i>Completado',
                     content: 'Nuevo usuario registrado',
                     type: 'green',
                     theme: 'material',
@@ -97,7 +97,7 @@ if (add != null) {
               }
             },
             cancel: {
-              text: '<i class="fa fa-times me-1"></i>Cancelar',
+              text: '<i class="fa-solid fa-xmark me-1"></i>Cancelar',
               btnClass: 'btn-light',
               action: function(){}
             },
@@ -113,7 +113,7 @@ function editarUsu(idx) {
   var safeEmail = escapeHtml(allUsuarios[idx]['email']);
   var safePhone = escapeHtml(allUsuarios[idx]['phone']);
   $.confirm({
-    title: '<i class="fa fa-pencil-square-o text-primary me-2"></i>Editar Datos de Usuario',
+    title: '<i class="fa-regular fa-pen-to-square text-primary me-2"></i>Editar Datos de Usuario',
     content: '<form>'
     +'<div class="row g-3">'
           +'<div class="col-12">'
@@ -136,7 +136,7 @@ function editarUsu(idx) {
       theme: 'material',
     buttons: {
         confirm: {
-          text: '<i class="fa fa-save me-1"></i>Actualizar',
+          text: '<i class="fa-regular fa-floppy-disk me-1"></i>Actualizar',
           btnClass: 'btn-primary',
           action: function () {
             var name = this.$content.find('#itemNombre').val();
@@ -149,7 +149,7 @@ function editarUsu(idx) {
             if(!email) errors.push('Email');
             if(errors.length > 0){
                 $.alert({
-                  title: '<i class="fa fa-exclamation-triangle text-warning me-2"></i>Campos requeridos',
+                  title: '<i class="fa-solid fa-triangle-exclamation text-warning me-2"></i>Campos requeridos',
                   content: 'Complete: <strong>'+escapeHtml(errors.join(', '))+'</strong>',
                   type: 'orange',
                   theme: 'material',
@@ -159,7 +159,7 @@ function editarUsu(idx) {
             }
             if(!caract.test(email)){
                $.alert({
-                 title: '<i class="fa fa-times-circle text-danger me-2"></i>Email inválido',
+                 title: '<i class="fa-solid fa-circle-xmark text-danger me-2"></i>Email inválido',
                  content: 'Formato de correo electrónico no válido',
                  type: 'red',
                  theme: 'material',
@@ -179,7 +179,7 @@ function editarUsu(idx) {
             })
             .always(function() {
               $.alert({
-                title: '<i class="fa fa-check-circle text-success me-2"></i>Actualizado',
+                title: '<i class="fa-solid fa-circle-check text-success me-2"></i>Actualizado',
                 content: 'Usuario actualizado correctamente',
                 type: 'green',
                 theme: 'material',
@@ -189,7 +189,7 @@ function editarUsu(idx) {
           }
         },
         cancel: {
-          text: '<i class="fa fa-times me-1"></i>Cancelar',
+          text: '<i class="fa-solid fa-xmark me-1"></i>Cancelar',
           btnClass: 'btn-light',
           action: function(){}
         },
@@ -204,8 +204,8 @@ function editarUsu(idx) {
        var safeEmail = escapeHtml(allUsuarios[i]['email']);
        var safePhone = escapeHtml(allUsuarios[i]['phone']);
        var safeEmailHref = escapeHtml(allUsuarios[i]['email']);
-       var btn = '<button type="button" class="btn-action btn-action-edit" onclick="editarUsu('+i+')" title="Editar"><i class="fa fa-pencil" aria-hidden="true"></i></button>'
-              +'<button type="button" class="btn-action btn-action-delete ms-1" onclick="eliminaUsu('+i+')" title="Eliminar"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+       var btn = '<button type="button" class="btn-action btn-action-edit" onclick="editarUsu('+i+')" title="Editar"><i class="fa-solid fa-pencil" aria-hidden="true"></i></button>'
+              +'<button type="button" class="btn-action btn-action-delete ms-1" onclick="eliminaUsu('+i+')" title="Eliminar"><i class="fa-solid fa-trash-can" aria-hidden="true"></i></button>';
         tr += '<tr>'
           +'<td class="ps-4 fw-semibold">'+safeName+'</td>'
           +'<td><a href="mailto:'+safeEmailHref+'" class="text-decoration-none">'+safeEmail+'</a></td>'
@@ -223,13 +223,13 @@ function editarUsu(idx) {
 function eliminaUsu(inx){
    var safeName = escapeHtml(allUsuarios[inx]['user_name']);
    $.confirm({
-    title: '<i class="fa fa-trash text-danger me-2"></i>Eliminar Usuario',
+    title: '<i class="fa-solid fa-trash-can text-danger me-2"></i>Eliminar Usuario',
     content: '¿Está seguro de eliminar a <strong>'+safeName+'</strong>?',
     theme: 'material',
     type: 'red',
     buttons: {
         confirm: {
-          text: '<i class="fa fa-trash me-1"></i>Sí, eliminar',
+          text: '<i class="fa-solid fa-trash-can me-1"></i>Sí, eliminar',
           btnClass: 'btn-danger',
           action: function () {
             $.ajax({
@@ -243,7 +243,7 @@ function eliminaUsu(inx){
             })
             .always(function() {
               $.alert({
-                title: '<i class="fa fa-check-circle text-success me-2"></i>Eliminado',
+                title: '<i class="fa-solid fa-circle-check text-success me-2"></i>Eliminado',
                 content: 'Usuario eliminado correctamente',
                 type: 'green',
                 theme: 'material',
@@ -253,7 +253,7 @@ function eliminaUsu(inx){
           }
         },
         cancel: {
-          text: '<i class="fa fa-times me-1"></i>Cancelar',
+          text: '<i class="fa-solid fa-xmark me-1"></i>Cancelar',
           btnClass: 'btn-light',
           action: function(){}
         },
