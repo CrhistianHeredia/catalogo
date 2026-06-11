@@ -2,3 +2,4 @@ vendor/
 lib.backup.*/
 docker-compose.yml
 .phpunit.cache/
+config.local.php
