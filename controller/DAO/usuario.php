@@ -1,26 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 require_once __DIR__ . '/Connection.php';
 
 class Usuario {
 
     private ?PDO $db = null;
-    private $id = null; 
-    private $nombre = null;
-    private $name = null;
-    private $email = null;
-    private $phone = null;
+    private int|null|string $id = null; 
+    private ?string $nombre = null;
+    private ?string $name = null;
+    private ?string $email = null;
+    private ?string $phone = null;
 
-    /**
-     * @param PDO|null $pdo Optional PDO instance. If null, opens a new connection.
-     */
     public function __construct(?PDO $pdo = null) {
         $this->db = $pdo;
     }
 
-    /**
-     * Get (or lazily open) the PDO connection.
-     */
     private function db(): PDO {
         if ($this->db === null) {
             $this->db = openConnection();
@@ -28,39 +24,39 @@ class Usuario {
         return $this->db;
     }
 
-    public function setIdUser($arg) {
+    public function setIdUser(int|string $arg): void {
         $this->id = $arg;
     }
 
-    public function setEmail($arg) {
+    public function setEmail(string $arg): void {
         $this->email = $arg;
     }
     
-    public function setName($arg) {
+    public function setName(string $arg): void {
         $this->name = $arg;
     }
 
-    public function setPhone($arg) {
+    public function setPhone(string $arg): void {
         $this->phone = $arg;
     }
     
-    public function getIdUser() {
+    public function getIdUser(): int {
         return intval($this->id);
     }
 
-    public function getEmail() {
+    public function getEmail(): ?string {
         return $this->email;
     }
         
-    public function getName() {
+    public function getName(): ?string {
         return $this->name;
     }
 
-    public function getPhone() {
+    public function getPhone(): ?string {
         return $this->phone;
     }
     
-    public function consultar() {
+    public function consultar(): array|false {
         $db = $this->db();
         $query = "SELECT * FROM users";
         $statement = $db->prepare($query);
@@ -68,7 +64,7 @@ class Usuario {
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function agregar() {
+    public function agregar(): void {
         $db = $this->db();
         $query = "INSERT INTO `prueba`.`users` (`user_name`,`phone`,`email`) VALUES (:username,:phone,:useremail)";
         $statement = $db->prepare($query);
@@ -78,7 +74,7 @@ class Usuario {
         $statement->execute();
     }
 
-    public function modificar() {
+    public function modificar(): void {
         $db = $this->db();
         $query = "UPDATE `prueba`.`users` SET `user_name` = :username, `phone` = :phone, `email` = :useremail WHERE `id_user` = :id";
         $statement = $db->prepare($query);
@@ -89,7 +85,7 @@ class Usuario {
         $statement->execute();
     }
 
-    public function eliminar() {
+    public function eliminar(): void {
         $db = $this->db();
         $query = "DELETE FROM `prueba`.`users` WHERE `id_user` = :id";
         $statement = $db->prepare($query);

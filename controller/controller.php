@@ -1,25 +1,18 @@
 <?php
+
+declare(strict_types=1);
+
 include_once("DAO/usuario.php");
-
-/*
-Clase Control para la gestion de Peticiones dependiendo de cada modulo solicitado
-usualmente se separa un controlador par acada clase pero para hechos de accesibilidad
-a los incluyo en esta clase 
-
-*/
 
 class Control {	
 
 	private Usuario $usuarios;
 	
-	/**
-	 * @param Usuario|null $usuario Injected Usuario DAO. Creates a default one if null.
-	 */
 	public function __construct(?Usuario $usuario = null) {
 		$this->usuarios = $usuario ?? new Usuario();
 	}
 
-	public function allUsuarios(){
+	public function allUsuarios(): ?array {
 		$response = null;
 		try{
 			$response = $this->usuarios->consultar();
@@ -29,7 +22,7 @@ class Control {
 		return $response;
 	}
 
-	public function altaUsuarios($arg){
+	public function altaUsuarios(array $arg): string {
 		try{
 			$this->usuarios->setName($arg['name']);
 			$this->usuarios->setPhone($arg['phone']);
@@ -38,10 +31,10 @@ class Control {
 		}catch(Exception $e){
 			echo "Error: ".$e->getMessage();
 		}
-		return json_encode($this->allUsuarios(), true);
+		return json_encode($this->allUsuarios(), JSON_PRETTY_PRINT);
 	}
 
-	public function editarUsuarios($arg){
+	public function editarUsuarios(array $arg): string {
 		try{
 			$this->usuarios->setName($arg['name']);
 			$this->usuarios->setPhone($arg['phone']);
@@ -51,16 +44,16 @@ class Control {
 		}catch(Exception $e){
 			echo "Error: ".$e->getMessage();
 		}
-		return json_encode($this->allUsuarios(), true);
+		return json_encode($this->allUsuarios(), JSON_PRETTY_PRINT);
 	}
 
-	public function eliminaUsuario($arg){
+	public function eliminaUsuario(array $arg): string {
 		try{
 			$this->usuarios->setIdUser($arg['id_user']);
 			$this->usuarios->eliminar();
 		}catch(Exception $e){
 			echo "Error: ".$e->getMessage();
 		}
-		return json_encode($this->allUsuarios(), true);
+		return json_encode($this->allUsuarios(), JSON_PRETTY_PRINT);
 	}
 }

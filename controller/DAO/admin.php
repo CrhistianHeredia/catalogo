@@ -1,13 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 require_once __DIR__ . '/Connection.php';
 
 class Admin {
 
     private ?PDO $db = null;
 
-    /**
-     * @param PDO|null $pdo Optional PDO instance. If null, opens a new connection.
-     */
     public function __construct(?PDO $pdo = null) {
         $this->db = $pdo;
     }
@@ -19,17 +19,12 @@ class Admin {
         return $this->db;
     }
 
-    /**
-     * Find an admin by username.
-     * @param string $username
-     * @return array|null
-     */
-    public function findByUsername($username) {
+    public function findByUsername(string $username): ?array {
         $db = $this->db();
         $stmt = $db->prepare("SELECT * FROM admins WHERE username = :username LIMIT 1");
         $stmt->bindParam(':username', $username);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $row ?: null;
+        return $row !== false ? $row : null;
     }
 }

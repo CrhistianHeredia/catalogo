@@ -1,19 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 require_once __DIR__ . "/DAO/admin.php";
 
-/**
- * Start a PHP session if not already started.
- */
-function ensureSession() {
+function ensureSession(): void {
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
 }
 
-/**
- * Redirect to login if the user is not authenticated.
- */
-function requireAuth() {
+function requireAuth(): void {
     ensureSession();
     if (!isset($_SESSION['admin_id'])) {
         header("Location: login.php");
@@ -21,15 +18,7 @@ function requireAuth() {
     }
 }
 
-/**
- * Verify login credentials against the admins table.
- * Returns true on success (sets session vars), false on failure.
- *
- * @param string $username
- * @param string $password
- * @return bool
- */
-function loginUser($username, $password) {
+function loginUser(string $username, string $password): bool {
     $admin = new Admin();
     $row = $admin->findByUsername($username);
 
@@ -48,10 +37,7 @@ function loginUser($username, $password) {
     return true;
 }
 
-/**
- * Destroy the session and log out.
- */
-function logoutUser() {
+function logoutUser(): void {
     ensureSession();
     $_SESSION = [];
     if (ini_get("session.use_cookies")) {
