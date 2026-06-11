@@ -77,7 +77,7 @@ if (add != null) {
                     return false;
                 }
                 $.ajax({
-                  url: 'controller/controller.php',
+                  url: 'controller/router.php',
                   type: 'POST',
                     data: {request: 'altaUsuarios', arg: JSON.stringify({ name: name, phone: phone, email: email })},
                     success: function(response){
@@ -169,7 +169,7 @@ function editarUsu(idx) {
             }
 
             $.ajax({
-              url: 'controller/controller.php',
+              url: 'controller/router.php',
               type: 'POST',
                 data: {request: 'editarUsuarios', arg: JSON.stringify({ name: name, phone: phone, email: email, id_user: allUsuarios[idx]['id_user']})},
                 success: function(response){
@@ -233,7 +233,7 @@ function eliminaUsu(inx){
           btnClass: 'btn-danger',
           action: function () {
             $.ajax({
-              url: 'controller/controller.php',
+              url: 'controller/router.php',
               type: 'POST',
                 data: {request: 'eliminaUsuario', arg: JSON.stringify({ id_user: allUsuarios[inx]['id_user']})},
                 success: function(response){

@@ -61,18 +61,3 @@ class Control {
 		return json_encode($this->allUsuarios(), true);
 	}
 }
-
-/*
-	Script para validad las peticiones de la interface o sea las vistas de la aplicacion para 
-	posteriormente gestionar esa peticion al servidor dependiendo del modulo solicitado
-
-*/
-
-if(isset($_REQUEST['request']) && !empty($_REQUEST['request']) && isset($_REQUEST['arg']) && !empty($_REQUEST['arg'])){
-	$request = $_REQUEST['request'];
-	$arg = json_decode($_REQUEST['arg'],true);
-	$control = new Control();
-	echo $control->$request($arg);
-}
-
-?>
