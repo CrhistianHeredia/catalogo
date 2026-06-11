@@ -1,102 +1,99 @@
 <?php
 
+require_once __DIR__ . '/Connection.php';
 
-/*
-Crhistian Heredia
-Clase Usuarios donde se definen los atributos y las funciones para cada accion del usuario
-hereda de BD ya que esta clase requiere de las funciones de conectar para el envio de los datos
-corespondoentes para que sea almancenados en la respectiva tabla de la base de datos
-*/
+class Usuario {
 
+    private ?PDO $db = null;
+    private $id = null; 
+    private $nombre = null;
+    private $name = null;
+    private $email = null;
+    private $phone = null;
 
-require_once("BD.php");
+    /**
+     * @param PDO|null $pdo Optional PDO instance. If null, opens a new connection.
+     */
+    public function __construct(?PDO $pdo = null) {
+        $this->db = $pdo;
+    }
 
-class Usuario extends DB{
+    /**
+     * Get (or lazily open) the PDO connection.
+     */
+    private function db(): PDO {
+        if ($this->db === null) {
+            $this->db = openConnection();
+        }
+        return $this->db;
+    }
 
-	private $id = null; 
-	private $nombre = null;
-	private $name = null;
-	private $email = null;
-	private $phone = null;
+    public function setIdUser($arg) {
+        $this->id = $arg;
+    }
 
+    public function setEmail($arg) {
+        $this->email = $arg;
+    }
+    
+    public function setName($arg) {
+        $this->name = $arg;
+    }
 
-	function __construct(){
-		parent::__construct();
-	}
+    public function setPhone($arg) {
+        $this->phone = $arg;
+    }
+    
+    public function getIdUser() {
+        return intval($this->id);
+    }
 
-	public function setIdUser($arg){
-		$this->id = $arg;
-	}
+    public function getEmail() {
+        return parse_str($this->email);
+    }
+        
+    public function getName() {
+        return parse_str($this->nombre);
+    }
 
-	public function setEmail($arg){
-		$this->email = $arg;
-	}
-	
-	public function setName($arg){
-		$this->name =$arg;
-	}
+    public function getPhone() {
+        return $this->phone;
+    }
+    
+    public function consultar() {
+        $db = $this->db();
+        $query = "SELECT * FROM users";
+        $statement = $db->prepare($query);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
 
-	public function setPhone($arg){
-		$this->phone = $arg;
-	}
-	
-	public function getIdUser(){
-		return intval($this->id);
-	}
-
-	public function getEmail(){
-		return parse_str($this->email);
-	}
-		
-	public function getName(){
-		return parse_str($this->nombre);
-	}
-
-	public function getPhone(){
-		return $this->phone;
-	}
-	
-	public function consultar(){
-		$open = $this->openDB();
-
-		$query = "SELECT * FROM users";
-		$statement = $open->prepare($query);
-		$statement->execute();
-		$response = $statement->fetchAll(PDO::FETCH_ASSOC);
-		return $response;
-	}
-
-	public function agregar(){
-		$open = $this->openDB();
-		$query = "INSERT INTO `prueba`.`users` (`user_name`,`phone`,`email`) VALUES (:username,:phone,:useremail)";
-		$statement = $open->prepare($query);
-		$statement->bindParam('username', $this->name);
+    public function agregar() {
+        $db = $this->db();
+        $query = "INSERT INTO `prueba`.`users` (`user_name`,`phone`,`email`) VALUES (:username,:phone,:useremail)";
+        $statement = $db->prepare($query);
+        $statement->bindParam('username', $this->name);
         $statement->bindParam('phone', $this->phone);
-		$statement->bindParam('useremail', $this->email);
-		$statement->execute();
-		$this->closeDB($open);
-	}
+        $statement->bindParam('useremail', $this->email);
+        $statement->execute();
+    }
 
-	public function modificar(){
-		$open = $this->openDB();
-		$query = "UPDATE `prueba`.`users` SET `user_name` = :username, `phone` = :phone, `email` = :useremail WHERE `id_user` = :id";
-		$statement = $open->prepare($query);
-		$statement->bindParam('username', $this->name);
+    public function modificar() {
+        $db = $this->db();
+        $query = "UPDATE `prueba`.`users` SET `user_name` = :username, `phone` = :phone, `email` = :useremail WHERE `id_user` = :id";
+        $statement = $db->prepare($query);
+        $statement->bindParam('username', $this->name);
         $statement->bindParam('phone', $this->phone);
-		$statement->bindParam('useremail', $this->email);
-		$statement->bindParam('id', $this->id);
-		$statement->execute();
-		$this->closeDB($open);
-	}
+        $statement->bindParam('useremail', $this->email);
+        $statement->bindParam('id', $this->id);
+        $statement->execute();
+    }
 
-	public function eliminar(){
-		$open = $this->openDB();
-		$query = "DELETE FROM `prueba`.`users` WHERE `id_user` = :id ";
-		$statement = $open->prepare($query);
-		$statement->bindParam('id', $this->id);
-		$statement->execute();
-		$this->closeDB($open);
-	}
+    public function eliminar() {
+        $db = $this->db();
+        $query = "DELETE FROM `prueba`.`users` WHERE `id_user` = :id";
+        $statement = $db->prepare($query);
+        $statement->bindParam('id', $this->id);
+        $statement->execute();
+    }
 }
-
-?>

@@ -10,18 +10,21 @@ a los incluyo en esta clase
 
 class Control {	
 
-	private $usuarios = null;
+	private Usuario $usuarios;
 	
-	function __construct(){
-		$this->usuarios = new Usuario();
+	/**
+	 * @param Usuario|null $usuario Injected Usuario DAO. Creates a default one if null.
+	 */
+	public function __construct(?Usuario $usuario = null) {
+		$this->usuarios = $usuario ?? new Usuario();
 	}
 
 	public function allUsuarios(){
 		$response = null;
 		try{
 			$response = $this->usuarios->consultar();
-		}catch(ModelException $e){
-			echo "Error: ".$e;
+		}catch(Exception $e){
+			echo "Error: ".$e->getMessage();
 		}
 		return $response;
 	}
@@ -31,9 +34,9 @@ class Control {
 			$this->usuarios->setName($arg['name']);
 			$this->usuarios->setPhone($arg['phone']);
 			$this->usuarios->setEmail($arg['email']);
-			$ejecutar = $this->usuarios->agregar();
-		}catch(ModelException $e){
-			echo "Error: ".$e;
+			$this->usuarios->agregar();
+		}catch(Exception $e){
+			echo "Error: ".$e->getMessage();
 		}
 		return json_encode($this->allUsuarios(), true);
 	}
@@ -44,9 +47,9 @@ class Control {
 			$this->usuarios->setPhone($arg['phone']);
 			$this->usuarios->setEmail($arg['email']);
 			$this->usuarios->setIdUser($arg['id_user']);
-			$ejecutar = $this->usuarios->modificar();
-		}catch(ModelException $e){
-			echo "Error: ".$e;
+			$this->usuarios->modificar();
+		}catch(Exception $e){
+			echo "Error: ".$e->getMessage();
 		}
 		return json_encode($this->allUsuarios(), true);
 	}
@@ -54,9 +57,9 @@ class Control {
 	public function eliminaUsuario($arg){
 		try{
 			$this->usuarios->setIdUser($arg['id_user']);
-			$ejecutar = $this->usuarios->eliminar();
-		}catch(ModelException $e){
-			echo "Error: ".$e;
+			$this->usuarios->eliminar();
+		}catch(Exception $e){
+			echo "Error: ".$e->getMessage();
 		}
 		return json_encode($this->allUsuarios(), true);
 	}
